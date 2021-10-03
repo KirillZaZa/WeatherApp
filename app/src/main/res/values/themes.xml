@@ -1,0 +1,49 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.WeatherApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="colorPrimary">@color/main_background</item>
+        <item name="colorPrimaryVariant">@color/main_background</item>
+        <item name="colorOnPrimary">@color/purple</item>
+
+
+        <item name="android:statusBarColor">@color/purple</item>
+
+    </style>
+
+
+    <style name="SubtitleStyle">
+
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/mont_reg</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="HeaderStyle">
+
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/mont_semibold</item>
+
+    </style>
+
+    <style name="WeatherInfoItem">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="fontFamily">@font/mont_reg</item>
+    </style>
+
+
+    <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="TextWrapperStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="fontFamily">@font/mont_reg</item>
+    </style>
+</resources>

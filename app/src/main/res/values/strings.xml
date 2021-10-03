@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
+    <string name="header_date">Сегодня, 15 декабря</string>
+    <string name="header_city">Санкт-Петербург</string>
+
+    <string name="text_current_weather">Облачно</string>
+
+    <string name="info_wind">Ветер</string>
+    <string name="info_temperature">Температура</string>
+    <string name="info_humidity">Влажность</string>
+    
+    <string name="bottom_today">Сегодня</string>
+    <string name="bottom_time">12:00</string>
+    <string name="bottom_temperature" formatted="false">%d°С</string>
+
+    <string name="temperature_example">35°C</string>
+    <string name="wind_example">234</string>
+    <string name="humidity_example">25%</string>
+
+    <string name="text_error">Нет информации</string>
+    <string name="text_choose_city">Выберите город</string>
+    <string name="text_info_error">--</string>
+
+</resources>

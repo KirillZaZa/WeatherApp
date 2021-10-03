@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    tools:context=".presentation.WeatherActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/top_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        map:layout_constraintGuide_begin="56dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        map:layout_constraintGuide_end="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        map:layout_constraintGuide_begin="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        map:layout_constraintGuide_end="24dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/center_guideline"
+        android:orientation="horizontal"
+        map:layout_constraintGuide_percent="0.48"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/header_date"
+        android:theme="@style/SubtitleStyle"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        map:layout_constraintStart_toEndOf="@id/start_guideline"
+        map:layout_constraintTop_toBottomOf="@id/top_guideline" />
+
+    <TextView
+        android:id="@+id/tv_city"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/text_choose_city"
+        android:theme="@style/HeaderStyle"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        map:layout_constraintStart_toStartOf="@id/tv_date"
+        map:layout_constraintTop_toBottomOf="@id/tv_date" />
+
+    <ImageButton
+        android:id="@+id/button_update"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_refresh"
+        map:layout_constraintBottom_toBottomOf="@id/tv_city"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        map:layout_constraintTop_toTopOf="@id/tv_city"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/button_previous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_prev"
+        map:layout_constraintBottom_toBottomOf="@id/iv_weather"
+        map:layout_constraintStart_toEndOf="@id/start_guideline"
+        map:layout_constraintTop_toTopOf="@id/iv_weather"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/button_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_next"
+        map:layout_constraintBottom_toBottomOf="@id/iv_weather"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        map:layout_constraintTop_toTopOf="@id/iv_weather"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+
+    <ImageView
+        android:id="@+id/iv_weather"
+        map:layout_constraintTop_toBottomOf="@id/tv_city"
+        map:layout_constraintStart_toEndOf="@id/start_guideline"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        android:layout_marginTop="8dp"
+        map:layout_constraintBottom_toTopOf="@id/tv_current_weather"
+        android:background="@drawable/ic_sad"
+        android:layout_width="124dp"
+        android:layout_height="124dp"/>
+
+    <TextView
+        android:id="@+id/tv_current_weather"
+        android:text="@string/text_error"
+        android:theme="@style/SubtitleStyle"
+        android:textSize="20sp"
+        android:layout_marginBottom="24dp"
+        android:textAlignment="center"
+        map:layout_constraintStart_toEndOf="@id/start_guideline"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        map:layout_constraintBottom_toBottomOf="@id/center_guideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/tv_temperature"
+        android:text="@string/info_temperature"
+        android:theme="@style/SubtitleStyle"
+        android:textSize="14sp"
+        map:layout_constraintTop_toBottomOf="@id/center_guideline"
+        map:layout_constraintStart_toEndOf="@id/start_guideline"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    
+    <TextView
+        android:id="@+id/tv_temperature_info"
+        android:text="@string/text_info_error"
+        android:theme="@style/WeatherInfoItem"
+        android:layout_marginTop="8dp"
+        map:layout_constraintTop_toBottomOf="@id/tv_temperature"
+        map:layout_constraintStart_toStartOf="@id/tv_temperature"
+        map:layout_constraintEnd_toEndOf="@id/tv_temperature"
+        android:fontFamily="@font/mont_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:id="@+id/divider_left"
+        map:layout_constraintTop_toTopOf="@id/tv_temperature"
+        map:layout_constraintBottom_toBottomOf="@id/tv_temperature_info"
+        map:layout_constraintEnd_toStartOf="@id/tv_temperature"
+        android:background="@color/grey"
+        android:layout_width="1dp"
+        android:layout_marginEnd="30dp"
+        android:layout_height="56dp"/>
+
+
+    <View
+        android:id="@+id/divider_right"
+        map:layout_constraintTop_toTopOf="@id/tv_temperature"
+        map:layout_constraintBottom_toBottomOf="@id/tv_temperature_info"
+        map:layout_constraintStart_toEndOf="@id/tv_temperature"
+        android:background="@color/grey"
+        android:layout_width="1dp"
+        android:layout_marginStart="30dp"
+        android:layout_height="56dp"/>
+
+    <TextView
+        android:id="@+id/tv_wind"
+        android:text="@string/info_wind"
+        android:textSize="14sp"
+        map:layout_constraintTop_toBottomOf="@id/center_guideline"
+        map:layout_constraintEnd_toStartOf="@id/divider_left"
+        map:layout_constraintStart_toStartOf="parent"
+        android:theme="@style/SubtitleStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_wind_info"
+        android:text="@string/text_info_error"
+        style="@style/WeatherInfoItem"
+        map:layout_constraintTop_toBottomOf="@id/tv_wind"
+        map:layout_constraintStart_toStartOf="@id/tv_wind"
+        map:layout_constraintEnd_toEndOf="@id/tv_wind"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_humidity"
+        style="@style/SubtitleStyle"
+        android:textSize="14sp"
+        android:text="@string/info_humidity"
+        map:layout_constraintStart_toEndOf="@id/divider_right"
+        map:layout_constraintTop_toBottomOf="@id/center_guideline"
+        map:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_humidity_info"
+        android:text="@string/text_info_error"
+        android:theme="@style/WeatherInfoItem"
+        map:layout_constraintStart_toStartOf="@id/tv_humidity"
+        map:layout_constraintTop_toBottomOf="@id/tv_humidity"
+        map:layout_constraintEnd_toEndOf="@id/tv_humidity"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.example.weatherapp.ui.Wrapper
+        android:layout_marginTop="24dp"
+        map:layout_constraintTop_toBottomOf="@id/tv_temperature_info"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintStart_toEndOf="@id/start_guideline"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
