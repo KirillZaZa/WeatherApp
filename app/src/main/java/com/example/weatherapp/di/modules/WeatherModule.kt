@@ -13,14 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-@Module
-class WeatherModule {
-
-    // provide objects
-
-
-
-}
+@Module(includes = [NetworkModule::class])
+class WeatherModule
 
 
 @Module
@@ -31,7 +25,7 @@ class NetworkModule{
         val httpClient = OkHttpClient.Builder()
             .readTimeout(5, TimeUnit.SECONDS)
             .callTimeout(5, TimeUnit.SECONDS)
-            .addInterceptor(HttpLoggingInterceptor())
+            .addNetworkInterceptor(HttpLoggingInterceptor())
             .build()
 
         val retrofit = Retrofit.Builder()

@@ -11,7 +11,8 @@ class WeatherUseCase @Inject constructor(private val repository: WeatherReposito
 
     fun getWeatherData(cityName: String): LocalWeatherData?{
         repository.getWeatherFromOpenWeather(cityName){
-            localWeatherData = it
+            localWeatherData = it.toLocalWeather()
+            localWeatherData?.list?.mapToLocalWeatherList()
         }
 
         return localWeatherData

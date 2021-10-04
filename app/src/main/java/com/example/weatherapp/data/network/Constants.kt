@@ -1,8 +1,10 @@
 package com.example.weatherapp.data.network
 
+import com.example.weatherapp.R
+
 
 object BuildConfig{
-    private const val API_KEY = "775d5fd0a909b842e88b59f8bbf09684"
+    private const val API_KEY = R.string.weather_key
 
     const val API_URL = "pro.openweathermap.org/data/2.5/forecast/hourly?q={cnt=24}&appid={$API_KEY}"
 }

@@ -10,7 +10,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [WeatherModule::class, PresenterModule::class, NetworkModule::class])
+@Component(modules = [WeatherModule::class, PresenterModule::class])
 interface WeatherComponent {
 
 
