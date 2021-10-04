@@ -13,4 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
-weather_api_key.xml
+open_weather_key.xml
