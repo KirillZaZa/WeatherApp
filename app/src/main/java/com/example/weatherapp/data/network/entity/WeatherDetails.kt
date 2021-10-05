@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.network
+package com.example.weatherapp.data.network.entity
 
 data class WeatherDetails(
     val clouds: Clouds,

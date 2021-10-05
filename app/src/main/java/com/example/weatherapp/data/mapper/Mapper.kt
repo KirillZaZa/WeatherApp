@@ -1,9 +1,9 @@
-package com.example.weatherapp.data
+package com.example.weatherapp.data.mapper
 
 import com.example.weatherapp.data.local.LocalWeatherData
 import com.example.weatherapp.data.local.LocalWeatherDetails
-import com.example.weatherapp.data.network.WeatherData
-import com.example.weatherapp.data.network.WeatherDetails
+import com.example.weatherapp.data.network.entity.WeatherData
+import com.example.weatherapp.data.network.entity.WeatherDetails
 
 
 fun WeatherData.toLocalWeather(): LocalWeatherData{
