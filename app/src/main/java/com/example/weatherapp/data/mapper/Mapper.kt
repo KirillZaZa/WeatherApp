@@ -1,5 +1,6 @@
 package com.example.weatherapp.data.mapper
 
+import com.example.weatherapp.data.extension.mapToLocalWeatherList
 import com.example.weatherapp.data.local.LocalWeatherData
 import com.example.weatherapp.data.local.LocalWeatherDetails
 import com.example.weatherapp.data.network.entity.WeatherData
@@ -9,7 +10,7 @@ import com.example.weatherapp.data.network.entity.WeatherDetails
 fun WeatherData.toLocalWeather(): LocalWeatherData{
     return LocalWeatherData(
         this.city.name,
-        this.list
+        this.list.mapToLocalWeatherList()
     )
 }
 

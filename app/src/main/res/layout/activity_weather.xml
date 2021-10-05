@@ -73,25 +73,6 @@
         map:layout_constraintTop_toTopOf="@id/tv_city"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
-    <ImageButton
-        android:id="@+id/button_previous"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_prev"
-        map:layout_constraintBottom_toBottomOf="@id/iv_weather"
-        map:layout_constraintStart_toEndOf="@id/start_guideline"
-        map:layout_constraintTop_toTopOf="@id/iv_weather"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
-    <ImageButton
-        android:id="@+id/button_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_next"
-        map:layout_constraintBottom_toBottomOf="@id/iv_weather"
-        map:layout_constraintEnd_toStartOf="@id/end_guideline"
-        map:layout_constraintTop_toTopOf="@id/iv_weather"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
 
     <ImageView

@@ -1,6 +1,6 @@
 package com.example.weatherapp.di.modules
 
-import com.example.weatherapp.data.network.BuildConfig
+import com.example.weatherapp.data.network.ApiConfig
 import com.example.weatherapp.data.network.WeatherService
 import dagger.Module
 import dagger.Provides
@@ -29,7 +29,7 @@ class NetworkModule{
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
+            .baseUrl(ApiConfig.API_URL)
             .client(httpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(GsonConverterFactory.create())
@@ -37,12 +37,5 @@ class NetworkModule{
 
         return retrofit.create(WeatherService::class.java)
     }
-
-}
-
-
-class PresenterModule{
-
-    //TODO: implement me
 
 }
