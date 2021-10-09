@@ -9,7 +9,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weatherapp.R
 import com.example.weatherapp.application.appComponent
 import com.example.weatherapp.data.local.entity.LocalWeatherData
-import com.example.weatherapp.data.local.entity.LocalWeatherDetails
 import com.example.weatherapp.databinding.ActivityWeatherBinding
 import com.example.weatherapp.presentation.presenters.WeatherPresenterImpl
 import com.example.weatherapp.presentation.view.WeatherView
@@ -79,7 +78,7 @@ class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener{
         }
     }
 
-    private fun showForecastForDay(localWeatherDataList: List<LocalWeatherDetails>) {
+    private fun showForecastForDay() {
         //TODO show forecast in bottombar (using recyclerview)
     }
 

@@ -12,6 +12,14 @@ object WeatherUtil {
     }
 
 
+
 }
 
 fun Int.kelvinsToCelsius(): Int = this - 273
+
+fun Long.convertIntoTime(): String{
+    val date = Date(this * 1000)
+    val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+    return dateFormat.format(date)
+}

@@ -9,5 +9,7 @@ data class LocalWeatherData(
     val visibility: Int,
     val humidity: String,
     val temperature: String,
-    val windSpeed: String
+    val windSpeed: String,
+    val lat: String,
+    val lon: String
 )

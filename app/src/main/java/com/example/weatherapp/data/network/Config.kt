@@ -9,4 +9,6 @@ object ApiConfig {
     const val API_KEY = "775d5fd0a909b842e88b59f8bbf09684"
 
     const val LANG = "ru"
+
+    const val EXCLUDE = "hourly"
 }
