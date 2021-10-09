@@ -1,9 +1,11 @@
 package com.example.weatherapp.data.usecase
 
-import com.example.weatherapp.data.local.LocalWeatherData
+import com.example.weatherapp.data.local.entity.LocalWeatherData
 
 interface WeatherUseCase {
 
-    fun getLocalWeatherData(cityName: String, callback: (UseCaseStatus<LocalWeatherData>) -> Unit)
+    fun getLocalWeatherData(cityName: String, callback: (ResponseUseCase<LocalWeatherData>) -> Unit)
+
+    fun updateWeather(callback: (ResponseUseCase<LocalWeatherData>) -> Unit)
 
 }

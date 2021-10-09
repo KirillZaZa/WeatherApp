@@ -2,29 +2,40 @@ package com.example.weatherapp.application
 
 import android.app.Application
 import android.content.Context
-import com.example.weatherapp.di.DaggerWeatherComponent
-import com.example.weatherapp.di.WeatherComponent
+import com.example.weatherapp.di.AppComponent
+import com.example.weatherapp.di.DaggerAppComponent
 
 class WeatherApplication : Application() {
 
+    lateinit var appComponent: AppComponent
 
-    private var _weatherComponent: WeatherComponent? = null
-
-    val weatherComponent: WeatherComponent
-        get() = checkNotNull(_weatherComponent)
 
     override fun onCreate() {
         super.onCreate()
-        _weatherComponent = DaggerWeatherComponent.builder()
+
+
+        appComponent = DaggerAppComponent
+            .builder()
             .application(this)
-            .create()
+            .build()
+
 
     }
+
 }
 
-val Context.weatherComponent: WeatherComponent
+val Context.appComponent: AppComponent
     get() = when (this) {
-        is WeatherApplication -> weatherComponent
-        else -> this.applicationContext.weatherComponent
+        is WeatherApplication -> appComponent
+        else -> this.applicationContext.appComponent
     }
+
+
+
+
+
+
+
+
+
 

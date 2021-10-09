@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="enter_city_name_toast">"Введите название города!"</string>
+    <string name="request_error_toast">Ошибка при запросе. Попробуйте снова.</string>
+    <string name="update_error_toast">Ошибка при обновлении. Попробуйте снова.</string>
+    <string name="updated_toast">Обновлено</string>
+
+</resources>

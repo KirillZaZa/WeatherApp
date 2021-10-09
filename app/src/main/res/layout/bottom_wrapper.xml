@@ -75,7 +75,6 @@
 
     <com.example.weatherapp.ui.SearchBar
         android:id="@+id/search_bar"
-        app:layout_constraintTop_toBottomOf="@id/wrapper_viewpager"
         app:layout_constraintBottom_toTopOf="@id/bottom_guideline"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

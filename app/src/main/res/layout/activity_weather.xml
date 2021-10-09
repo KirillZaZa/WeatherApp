@@ -82,7 +82,7 @@
         map:layout_constraintEnd_toStartOf="@id/end_guideline"
         android:layout_marginTop="8dp"
         map:layout_constraintBottom_toTopOf="@id/tv_current_weather"
-        android:background="@drawable/ic_sad"
+        android:src="@drawable/ic_sad"
         android:layout_width="124dp"
         android:layout_height="124dp"/>
 

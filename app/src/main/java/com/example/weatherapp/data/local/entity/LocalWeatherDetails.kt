@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.local
+package com.example.weatherapp.data.local.entity
 
 data class LocalWeatherDetails(
 

@@ -1,9 +1,11 @@
 package com.example.weatherapp.presentation.presenters
 
 
-import com.example.weatherapp.data.usecase.UseCaseStatus
+import android.util.Log
+import com.example.weatherapp.R
+import com.example.weatherapp.data.usecase.ResponseUseCase
 import com.example.weatherapp.data.usecase.WeatherUseCaseImpl
-import com.example.weatherapp.presentation.base.BasePresenter
+import com.example.weatherapp.presentation.presenters.base.BasePresenter
 import com.example.weatherapp.presentation.view.WeatherView
 import com.example.weatherapp.presentation.view.status.EventStatus
 import javax.inject.Inject
@@ -11,58 +13,74 @@ import javax.inject.Inject
 
 interface WeatherPresenter {
 
-    fun onUpdateButtonClick(cityName: String?)
 
     fun searchButtonClick(cityName: String?)
+
+    fun updateWeather()
 
 }
 
 class WeatherPresenterImpl @Inject constructor(
-    private val currentView: WeatherView,
-) : BasePresenter<WeatherView>(currentView), WeatherPresenter {
 
-    @Inject
-    private lateinit var weatherUseCase: WeatherUseCaseImpl
+    private val weatherUseCase: WeatherUseCaseImpl
+) : BasePresenter<WeatherView>(), WeatherPresenter {
 
-    override fun onUpdateButtonClick(cityName: String?) {
-        cityName ?: currentView.showError(EventStatus.SearchError("Введите название города!"))
-        weatherUseCase.getLocalWeatherData(cityName!!) { status ->
-            when (status) {
-                is UseCaseStatus.Success -> {
-                    view.showWeatherData(status.value)
-                    view.showForecastForDay(status.value.list)
-                }
 
-                is UseCaseStatus.Error -> {
-                    view.showError(EventStatus.UpdateError("Ошибка при обновлении. Попробуйте снова"))
-                }
-            }
-        }
-    }
+
+
 
     override fun searchButtonClick(cityName: String?) {
-        cityName ?: currentView.showError(EventStatus.SearchError("Введите название города!"))
-        weatherUseCase.getLocalWeatherData(cityName!!) { status ->
-            when(status){
-                is UseCaseStatus.Success ->{
-                    view.showWeatherData(status.value)
-                    view.showForecastForDay(status.value.list)
-                }
 
-                is UseCaseStatus.Error -> {
-                    view.showError(EventStatus.UpdateError("Ошибка при запросе. Попробуйте снова."))
-                }
+        _context ?: return
+
+        if (cityName == null) {
+            _view!!.showError(
+                EventStatus.SearchError(
+                    _context!!.getString(R.string.enter_city_name_toast)
+                )
+            )
+
+            return
+        }
+
+        weatherUseCase.getLocalWeatherData(cityName) { status ->
+            when (status) {
+
+                is ResponseUseCase.Success -> _view!!.showWeatherData(status.value)
+
+
+                is ResponseUseCase.Error -> _view!!.showError(
+                    EventStatus.UpdateError(
+                        _context!!.getString(R.string.update_error_toast)
+                    )
+                )
+
+
+                else -> return@getLocalWeatherData
+
             }
         }
     }
 
-    override fun onCreate() {}
+    override fun updateWeather() {
+        weatherUseCase.updateWeather { response ->
+            when (response) {
+                is ResponseUseCase.Success -> _view!!.showWeatherData(response.value)
 
-    override fun onAttach() {}
+                is ResponseUseCase.Error -> _view!!.showError(
+                    EventStatus.UpdateError(
+                        _context!!.getString(R.string.update_error_toast)
+                    )
+                )
 
-    override fun onDetach() {}
-
-    override fun onDestroy() {}
+                is ResponseUseCase.Failed -> _view!!.showError(
+                    EventStatus.UpdateError(
+                        _context!!.getString(R.string.enter_city_name_toast)
+                    )
+                )
+            }
+        }
+    }
 
 
 }

@@ -1,9 +1,16 @@
 package com.example.weatherapp.di.modules
 
+
+import android.app.Application
+import android.content.Context
+import com.example.weatherapp.R
+import com.example.weatherapp.data.extension.API_KEY
 import com.example.weatherapp.data.network.ApiConfig
 import com.example.weatherapp.data.network.WeatherService
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,11 +18,17 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 
-@Module(includes = [NetworkModule::class])
-class WeatherModule
+@Module(includes = [NetworkModule::class, RxJavaModule::class])
+abstract class WeatherModule{
 
+    @Singleton
+    @Binds
+    abstract fun context(application: Application): Context
+
+}
 
 @Module
 class NetworkModule{
@@ -23,8 +36,8 @@ class NetworkModule{
     @Provides
     fun provideWeatherService(): WeatherService{
         val httpClient = OkHttpClient.Builder()
-            .readTimeout(5, TimeUnit.SECONDS)
-            .callTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .callTimeout(10, TimeUnit.SECONDS)
             .addNetworkInterceptor(HttpLoggingInterceptor())
             .build()
 
@@ -39,3 +52,14 @@ class NetworkModule{
     }
 
 }
+
+
+@Module
+class RxJavaModule{
+
+    @Provides
+    fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+
+}
+
+
