@@ -17,7 +17,7 @@
         <activity
             android:name=".presentation.WeatherActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:windowSoftInputMode="adjustPan|stateAlwaysVisible|adjustResize"
             android:label="@string/title_activity_maps">
 
         </activity>

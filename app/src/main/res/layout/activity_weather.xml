@@ -7,6 +7,16 @@
     android:background="@color/main_background"
     tools:context=".presentation.WeatherActivity">
 
+    <com.example.weatherapp.ui.CustomSnackbar
+        android:id="@+id/custom_snackbar"
+        map:layout_constraintTop_toTopOf="parent"
+        map:layout_constraintStart_toEndOf="@id/start_guideline"
+        map:layout_constraintEnd_toStartOf="@id/end_guideline"
+        android:layout_marginHorizontal="24dp"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/top_guideline"
         android:layout_width="0dp"
@@ -82,13 +92,12 @@
         map:layout_constraintEnd_toStartOf="@id/end_guideline"
         android:layout_marginTop="8dp"
         map:layout_constraintBottom_toTopOf="@id/tv_current_weather"
-        android:src="@drawable/ic_sad"
         android:layout_width="156dp"
         android:layout_height="156dp"/>
 
     <TextView
         android:id="@+id/tv_current_weather"
-        android:text="@string/text_error"
+        android:text="@string/text_loading"
         android:theme="@style/SubtitleStyle"
         android:textSize="20sp"
         android:layout_marginBottom="24dp"
@@ -189,6 +198,7 @@
         android:layout_height="wrap_content"/>
 
     <com.example.weatherapp.ui.Wrapper
+        android:id="@+id/wrapper"
         android:layout_marginTop="24dp"
         map:layout_constraintTop_toBottomOf="@id/tv_temperature_info"
         map:layout_constraintBottom_toBottomOf="parent"

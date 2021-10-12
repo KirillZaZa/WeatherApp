@@ -14,7 +14,7 @@ fun WeatherData.toLocalWeather(): LocalWeatherData {
 
     return LocalWeatherData(
         cityName = this.name,
-        weather = this.weather[0].description,
+        weather = this.weather[0].description.replaceFirstChar(Char::uppercase),
         weatherType = this.weather[0].toWeatherType(),
         visibility = this.visibility,
         humidity = this.main.humidity.toString() + "%",

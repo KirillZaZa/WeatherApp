@@ -16,7 +16,6 @@ class WeatherUseCaseImpl @Inject constructor(private val repositoryImpl: Weather
         cityName: String,
         callback: (ResponseUseCase<LocalWeatherData>) -> Unit
     ) {
-        Log.e("Use case", "making request")
         repositoryImpl.getWeatherFromOpenWeather(cityName) {
             when (it) {
                 is Response.Success -> {

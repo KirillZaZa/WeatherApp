@@ -1,6 +1,8 @@
 package com.example.weatherapp.presentation.view.base
 
+import androidx.lifecycle.LifecycleOwner
 
-interface BaseView {
+
+interface BaseView: LifecycleOwner {
     fun toast(msg: String)
 }

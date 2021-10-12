@@ -44,6 +44,19 @@
     <style name="TextWrapperStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="fontFamily">@font/mont_reg</item>
+        <item name="fontFamily">@font/mont_semibold</item>
     </style>
+
+    <style name="SearchBar" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorPrimary">@color/grey</item>
+        <item name="android:textColorSecondary">@color/grey</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAppearance">@font/mont_semibold</item>
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="queryHint">@string/search_hint</item>
+        <item name="defaultQueryHint">@string/search_hint</item>
+        <item name="colorControlActivated">@color/purple</item>
+    </style>
+
+
 </resources>

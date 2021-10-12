@@ -19,9 +19,12 @@
     <string name="wind_example">234</string>
     <string name="humidity_example">25%</string>
 
-    <string name="text_error">Нет информации</string>
+    <string name="text_error">Ошибка при запросе</string>
     <string name="text_choose_city">Выберите город</string>
     <string name="text_info_error">--</string>
+    <string name="text_loading">Загрузка…</string>
+
+    <string name="search_hint">Поиск города</string>
 
 
 </resources>

@@ -14,7 +14,7 @@ import javax.inject.Inject
 class WeatherRepositoryImpl @Inject constructor(
     private val api: WeatherService,
     private val prefsManager: PrefsManager,
-    private val compositeDisposable: CompositeDisposable
+    private val compositeDisposable: CompositeDisposable,
 ) :
     WeatherRepository {
 
@@ -29,33 +29,37 @@ class WeatherRepositoryImpl @Inject constructor(
             .subscribe({ weather ->
 
                 prefsManager.setCityToPrefs(cityName)
+                prefsManager.setLatToPrefs(weather.coord.lat.toString())
+                prefsManager.setLonFromPrefs(weather.coord.lon.toString())
+
                 callback(Response.Success(weather))
 
             }, { error ->
 
-                Log.e("WeatherRepository: ", "getWeatherFromOpenWeather: ${error.localizedMessage}")
                 callback(Response.Error(error))
 
             })
+
+        compositeDisposable.add(disposable)
+
 
     }
 
     override fun updateWeather(callback: (Response<WeatherData>) -> Unit) {
         val cityName = prefsManager.getCityFromPrefs()
 
-        Log.e("Repository", "making request")
 
         val disposable = api.getForecastForCity(cityName, ApiConfig.API_KEY, ApiConfig.LANG)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ weather ->
-                Log.e("WeatherRepository: ", "getWeatherFromOpenWeather: $weather")
                 callback(Response.Success(weather))
 
             }, { error ->
-                Log.e("WeatherRepository: ", "getWeatherFromOpenWeather: ${error.localizedMessage}")
                 callback(Response.Error(error))
             })
+
+        compositeDisposable.add(disposable)
 
     }
 
@@ -83,7 +87,10 @@ class WeatherRepositoryImpl @Inject constructor(
                     Log.e("WeatherRepository: ", "getWeatherFromOpenWeather: ${error.localizedMessage}")
                     callback(Response.Error(error))
                 })
+
+        compositeDisposable.add(disposable)
     }
+
 
 
 }

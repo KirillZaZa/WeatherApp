@@ -1,13 +1,13 @@
 package com.example.weatherapp.presentation.presenters
 
 
-import android.util.Log
 import com.example.weatherapp.R
 import com.example.weatherapp.data.usecase.ResponseUseCase
 import com.example.weatherapp.data.usecase.WeatherUseCaseImpl
 import com.example.weatherapp.presentation.presenters.base.BasePresenter
 import com.example.weatherapp.presentation.view.WeatherView
 import com.example.weatherapp.presentation.view.status.EventStatus
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
@@ -16,14 +16,16 @@ interface WeatherPresenter {
 
     fun searchButtonClick(cityName: String?)
 
-    fun updateWeather()
+    fun updateWeather(isLoading: (Boolean) -> Unit)
 
 }
 
 class WeatherPresenterImpl @Inject constructor(
 
-    private val weatherUseCase: WeatherUseCaseImpl
-) : BasePresenter<WeatherView>(), WeatherPresenter {
+    private val weatherUseCase: WeatherUseCaseImpl,
+    compositeDisposable: CompositeDisposable,
+
+    ) : BasePresenter<WeatherView>(compositeDisposable), WeatherPresenter {
 
 
 
@@ -62,25 +64,39 @@ class WeatherPresenterImpl @Inject constructor(
         }
     }
 
-    override fun updateWeather() {
+    override fun updateWeather(isLoading: (Boolean)-> Unit) {
+        isLoading(true)
         weatherUseCase.updateWeather { response ->
             when (response) {
-                is ResponseUseCase.Success -> _view!!.showWeatherData(response.value)
+                is ResponseUseCase.Success -> {
+                    _view!!.showWeatherData(response.value)
+                    isLoading(false)
+                }
 
-                is ResponseUseCase.Error -> _view!!.showError(
-                    EventStatus.UpdateError(
-                        _context!!.getString(R.string.update_error_toast)
+                is ResponseUseCase.Error -> {
+                    _view!!.showError(
+                        EventStatus.UpdateError(
+                            _context!!.getString(R.string.update_error_toast)
+                        )
                     )
-                )
+                    isLoading(false)
 
-                is ResponseUseCase.Failed -> _view!!.showError(
-                    EventStatus.UpdateError(
-                        _context!!.getString(R.string.enter_city_name_toast)
+                }
+
+                is ResponseUseCase.Failed -> {
+                    _view!!.showError(
+                        EventStatus.UpdateError(
+                            _context!!.getString(R.string.enter_city_name_toast)
+                        )
                     )
-                )
+                    isLoading(false)
+
+                }
+
             }
         }
     }
+
 
 
 }

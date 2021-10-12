@@ -7,6 +7,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.data.extension.API_KEY
 import com.example.weatherapp.data.network.ApiConfig
 import com.example.weatherapp.data.network.WeatherService
+import com.example.weatherapp.databinding.SearchBarBinding
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Scope
 import javax.inject.Singleton
 
 
@@ -55,11 +57,22 @@ class NetworkModule{
 
 
 @Module
-class RxJavaModule{
+object RxJavaModule{
+
+    @Volatile
+    private var compositeDisposable: CompositeDisposable? = null
 
     @Provides
-    fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+    fun provideCompositeDisposable(): CompositeDisposable{
+
+        return compositeDisposable ?: synchronized(this){
+            val comp = CompositeDisposable()
+            compositeDisposable = comp
+            comp
+        }
+    }
 
 }
+
 
 
