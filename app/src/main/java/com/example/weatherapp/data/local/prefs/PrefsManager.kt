@@ -23,7 +23,6 @@ class PrefsManager @Inject constructor(private val context: Context) {
     fun setCityToPrefs(cityName: String){
         val prefs = context.getSharedPreferences(PREFS_MANAGER_KEY, Context.MODE_PRIVATE)
 
-        if(prefs.contains(CITY_NAME_PREFS_KEY)) return
 
         with(prefs.edit()){
             putString(CITY_NAME_PREFS_KEY, cityName)
@@ -39,7 +38,6 @@ class PrefsManager @Inject constructor(private val context: Context) {
     fun setLatToPrefs(lat: String){
         val prefs = context.getSharedPreferences(PREFS_MANAGER_KEY, Context.MODE_PRIVATE)
 
-        if(prefs.contains(LAT_CITY_KEY)) return
 
         with(prefs.edit()){
             putString(LAT_CITY_KEY, lat)
@@ -54,8 +52,6 @@ class PrefsManager @Inject constructor(private val context: Context) {
 
     fun setLonFromPrefs(lon: String){
         val prefs = context.getSharedPreferences(PREFS_MANAGER_KEY, Context.MODE_PRIVATE)
-
-        if(prefs.contains(LON_CITY_KEY)) return
 
         with(prefs.edit()){
             putString(LON_CITY_KEY, lon)

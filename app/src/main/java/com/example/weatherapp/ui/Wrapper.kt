@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.BottomWrapperBinding
@@ -21,8 +22,10 @@ class Wrapper @JvmOverloads constructor(
 
     private val viewBinding by viewBinding(BottomWrapperBinding::bind)
     private var centerX: Int = 0
+
     private val searchBinding
         get() = viewBinding.searchBar.searchBinding
+
     val wrapperBinding: BottomWrapperBinding
         get() = viewBinding
 
@@ -32,6 +35,7 @@ class Wrapper @JvmOverloads constructor(
     }
 
     init {
+
         View.inflate(context, R.layout.bottom_wrapper, this)
         setBackground()
 
@@ -43,7 +47,6 @@ class Wrapper @JvmOverloads constructor(
     }
 
     fun showSearchBar(parentHeight: Int) {
-        Log.e("Wrapper", "showSearchBar: animate")
         val tY = (parentHeight / 3.4).toFloat()
         ViewCompat.animate(viewBinding.searchBar)
             .translationY(-tY)
@@ -55,15 +58,17 @@ class Wrapper @JvmOverloads constructor(
 
     fun closeSearchBar() {
         if(searchBinding.searchEditText.isOpened){
-            Log.e("Wrapper", "closeSearchBar: animate")
 
             ViewCompat.animate(viewBinding.searchBar)
                 .translationY(0f)
                 .setDuration(250)
                 .setInterpolator(AccelerateDecelerateInterpolator())
                 .start()
+
         }
     }
+
+
 
 
 }

@@ -10,5 +10,5 @@ object ApiConfig {
 
     const val LANG = "ru"
 
-    const val EXCLUDE = "hourly"
+    const val EXCLUDE = "daily"
 }

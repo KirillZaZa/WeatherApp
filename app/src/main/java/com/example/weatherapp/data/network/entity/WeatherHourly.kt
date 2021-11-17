@@ -21,7 +21,7 @@ data class WeatherHourly(
         val visibility: Int,
         val weather: List<Weather>,
         val wind_deg: Int,
-        val wind_speed: Int
+        val wind_speed: Double
     ) {
         data class Weather(
             val description: String,

@@ -16,13 +16,14 @@ abstract class BasePresenter<T : BaseView>(
 
     protected var _view: T? = null
 
-    fun onCreate(context: Context, view: T) {
+    fun onAttach(context: Context, view: T) {
         _context = context
 
         _view = view
         _view!!.lifecycle.addObserver(this)
         Log.e("Abstract", "onCreate $_context, $_view, ${compositeDisposable.size()}")
     }
+
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {
@@ -32,6 +33,11 @@ abstract class BasePresenter<T : BaseView>(
         _view = null
 
         compositeDisposable.clear()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroy(){
+        compositeDisposable.dispose()
     }
 
 

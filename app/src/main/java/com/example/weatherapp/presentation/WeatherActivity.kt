@@ -2,16 +2,20 @@ package com.example.weatherapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
+import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.weatherapp.R
 import com.example.weatherapp.application.appComponent
+import com.example.weatherapp.data.local.WeatherType
 import com.example.weatherapp.data.local.entity.LocalWeatherData
 import com.example.weatherapp.data.local.entity.LocalWeatherHourly
+import com.example.weatherapp.data.local.prefs.PrefsManager
 import com.example.weatherapp.databinding.ActivityWeatherBinding
+import com.example.weatherapp.presentation.adapters.HourlyWeatherAdapter
+import com.example.weatherapp.presentation.holders.ItemOffsetDecoration
 import com.example.weatherapp.presentation.presenters.WeatherPresenterImpl
 import com.example.weatherapp.presentation.view.WeatherView
 import com.example.weatherapp.presentation.view.status.EventStatus
@@ -21,7 +25,8 @@ import com.example.weatherapp.utils.Keyboard
 import com.example.weatherapp.utils.WeatherUtil
 import javax.inject.Inject
 
-class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener {
+class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener,
+    SearchEditText.KeyImeChange {
 
     private val viewBinding by viewBinding(ActivityWeatherBinding::bind)
     private val searchBarBinding
@@ -30,6 +35,8 @@ class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener {
             .wrapperBinding
             .searchBar
             .searchBinding
+    private val wrapperBinding
+        get() = viewBinding.wrapper.wrapperBinding
 
     @Inject
     lateinit var weatherPresenterImpl: WeatherPresenterImpl
@@ -39,17 +46,23 @@ class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener {
 
     private lateinit var searchEditText: SearchEditText
 
+    private lateinit var rvAdapter: HourlyWeatherAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
-        setupSearch()
-        setListeners()
+
+        rvAdapter = HourlyWeatherAdapter()
+        wrapperBinding.wrapperRv.addItemDecoration(ItemOffsetDecoration(12))
+        wrapperBinding.wrapperRv.adapter = rvAdapter
 
         appComponent.inject(this)
 
-        weatherPresenterImpl.onCreate(context = this, view = this)
-        weatherPresenterImpl.updateWeather() { showLoading(it) }
+
+
+        setupSearch()
+        setListeners()
     }
 
 
@@ -57,6 +70,21 @@ class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener {
         if (isLoading) {
             viewBinding.buttonUpdate.isEnabled = !isLoading
             viewBinding.buttonUpdate.runUpdateAnimation()
+
+            with(viewBinding){
+                tvWindInfo.text = getString(R.string.text_info_error)
+                tvTemperatureInfo.text = getString(R.string.text_info_error)
+                tvHumidityInfo.text = getString(R.string.text_info_error)
+                tvCurrentWeather.text = getString(R.string.text_loading)
+            }
+
+            val list = mutableListOf<LocalWeatherHourly>()
+            val item = LocalWeatherHourly()
+
+            repeat(24){
+                list.add(it, item)
+            }
+            rvAdapter.setData(list, true)
         } else viewBinding.buttonUpdate.isEnabled = !isLoading
     }
 
@@ -89,7 +117,9 @@ class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener {
             tvCurrentWeather.text = getString(R.string.text_error)
             ivWeather.setImageResource(R.drawable.ic_sad)
         }
+
     }
+
 
     override fun showWeatherData(localWeatherData: LocalWeatherData) {
         toast(getString(R.string.updated_toast))
@@ -105,22 +135,19 @@ class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener {
 
             ivWeather.setImageResource(localWeatherData.weatherType.resourceImageId)
         }
-    }
-
-    private fun showForecastForDay(localWeatherHourly: LocalWeatherHourly) {
 
     }
+
+    override fun showForecastForDay(hourlyList: List<LocalWeatherHourly>) {
+        rvAdapter.setData(newList = hourlyList, false)
+    }
+
+
 
 
     private fun setupSearch() {
         searchEditText = searchBarBinding.searchEditText
-        searchEditText.setOnKeyImeChangeListener(object : SearchEditText.KeyImeChange {
-            override fun onKeyIme(keyCode: Int, event: KeyEvent?) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event!!.action == KeyEvent.ACTION_DOWN)
-                    closeSearch()
-            }
-        })
-
+        searchEditText.setOnKeyImeChangeListener(this)
     }
 
     private fun openSearch() {
@@ -141,8 +168,21 @@ class WeatherActivity : AppCompatActivity(), WeatherView, View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        weatherPresenterImpl.onCreate(this, this)
+        weatherPresenterImpl.onAttach(this, this)
         weatherPresenterImpl.updateWeather { showLoading(it) }
+    }
+
+
+    override fun onKeyIme(keyCode: Int, event: KeyEvent?) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event!!.action == KeyEvent.ACTION_DOWN)
+            closeSearch()
+        else if (keyCode == EditorInfo.IME_ACTION_GO) {
+            if (searchEditText.text.isNullOrBlank()) return
+
+            weatherPresenterImpl.searchButtonClick(
+                searchEditText.text?.trim().toString()
+            )
+        }
     }
 
 

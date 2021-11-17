@@ -10,6 +10,7 @@
     <com.example.weatherapp.ui.CustomSnackbar
         android:id="@+id/custom_snackbar"
         map:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         map:layout_constraintStart_toEndOf="@id/start_guideline"
         map:layout_constraintEnd_toStartOf="@id/end_guideline"
         android:layout_marginHorizontal="24dp"

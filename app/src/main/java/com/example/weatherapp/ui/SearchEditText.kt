@@ -3,6 +3,7 @@ package com.example.weatherapp.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatEditText
 
 class SearchEditText @JvmOverloads constructor(
@@ -11,12 +12,12 @@ class SearchEditText @JvmOverloads constructor(
     defStyleAttrs: Int = 0
 ): AppCompatEditText(context, attrs, defStyleAttrs) {
 
+
     private lateinit var keyImeChangeListener: KeyImeChange
     var isOpened = true
 
-    interface KeyImeChange{
-        fun onKeyIme(keyCode: Int, event: KeyEvent?)
-    }
+
+
 
     fun setOnKeyImeChangeListener(listener: KeyImeChange){
         keyImeChangeListener = listener
@@ -29,10 +30,20 @@ class SearchEditText @JvmOverloads constructor(
             isOpened = !isOpened
         }
 
+
         return super.onKeyPreIme(keyCode, event)
     }
 
+    override fun onEditorAction(actionCode: Int) {
+        if(actionCode == EditorInfo.IME_ACTION_GO){
+            keyImeChangeListener.onKeyIme(actionCode, null)
+        }
+    }
 
+
+    interface KeyImeChange{
+        fun onKeyIme(keyCode: Int, event: KeyEvent?)
+    }
 
 
 }

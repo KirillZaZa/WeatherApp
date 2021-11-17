@@ -1,6 +1,7 @@
 package com.example.weatherapp.presentation.presenters
 
 
+import android.util.Log
 import com.example.weatherapp.R
 import com.example.weatherapp.data.usecase.ResponseUseCase
 import com.example.weatherapp.data.usecase.WeatherUseCaseImpl
@@ -48,7 +49,29 @@ class WeatherPresenterImpl @Inject constructor(
         weatherUseCase.getLocalWeatherData(cityName) { status ->
             when (status) {
 
-                is ResponseUseCase.Success -> _view!!.showWeatherData(status.value)
+                is ResponseUseCase.Success -> {
+
+                    _view!!.showWeatherData(status.value)
+
+                    weatherUseCase.getWeatherForecast { response->
+                        when(response){
+
+                            is ResponseUseCase.Success -> {
+                                Log.e("Presenter", "${status.value}", )
+
+                                _view!!.showForecastForDay(response.value)
+                            }
+
+                            is ResponseUseCase.Error -> {
+                                _view!!.showError(EventStatus.SearchError(
+                                    _context!!.getString(R.string.request_error_toast)
+                                ))
+                            }
+
+                            else -> return@getWeatherForecast
+                        }
+                    }
+                }
 
 
                 is ResponseUseCase.Error -> _view!!.showError(
@@ -62,14 +85,36 @@ class WeatherPresenterImpl @Inject constructor(
 
             }
         }
+
+
     }
 
     override fun updateWeather(isLoading: (Boolean)-> Unit) {
         isLoading(true)
+
         weatherUseCase.updateWeather { response ->
             when (response) {
                 is ResponseUseCase.Success -> {
                     _view!!.showWeatherData(response.value)
+
+                    weatherUseCase.getWeatherForecast { status->
+                        when(status){
+
+                            is ResponseUseCase.Success -> {
+                                Log.e("Presenter", "${status.value}", )
+                                _view!!.showForecastForDay(status.value)
+                            }
+
+                            is ResponseUseCase.Error -> {
+                                _view!!.showError(EventStatus.SearchError(
+                                    _context!!.getString(R.string.request_error_toast)
+                                ))
+                            }
+
+                            else -> return@getWeatherForecast
+                        }
+                    }
+
                     isLoading(false)
                 }
 
@@ -95,6 +140,9 @@ class WeatherPresenterImpl @Inject constructor(
 
             }
         }
+
+
+
     }
 
 

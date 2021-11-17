@@ -4,7 +4,6 @@ package com.example.weatherapp.di.modules
 import android.app.Application
 import android.content.Context
 import com.example.weatherapp.R
-import com.example.weatherapp.data.extension.API_KEY
 import com.example.weatherapp.data.network.ApiConfig
 import com.example.weatherapp.data.network.WeatherService
 import com.example.weatherapp.databinding.SearchBarBinding

@@ -3,6 +3,8 @@ package com.example.weatherapp.data.usecase
 import android.util.Log
 import com.example.weatherapp.data.repository.WeatherRepositoryImpl
 import com.example.weatherapp.data.local.entity.LocalWeatherData
+import com.example.weatherapp.data.local.entity.LocalWeatherHourly
+import com.example.weatherapp.data.mapper.mapToHourly
 import com.example.weatherapp.data.repository.Response
 import com.example.weatherapp.data.mapper.toLocalWeather
 import javax.inject.Inject
@@ -43,6 +45,21 @@ class WeatherUseCaseImpl @Inject constructor(private val repositoryImpl: Weather
                     callback(ResponseUseCase.Error(response.throwable))
                 }
 
+            }
+        }
+    }
+
+    override fun getWeatherForecast(callback: (ResponseUseCase<List<LocalWeatherHourly>>) -> Unit) {
+        repositoryImpl.getWeatherForecast { response ->
+            when(response){
+                is Response.Success -> {
+                    val listHourly = response.value.hourly.mapToHourly()
+                    callback(ResponseUseCase.Success(listHourly))
+                }
+
+                is Response.Error -> {
+                    callback(ResponseUseCase.Error(response.throwable))
+                }
             }
         }
     }

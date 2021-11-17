@@ -4,6 +4,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.core.view.ViewCompat
+import io.reactivex.Completable
 
 
 fun View.runUpdateAnimation() {
@@ -13,3 +14,4 @@ fun View.runUpdateAnimation() {
         .setInterpolator(LinearInterpolator())
         .start()
 }
+
